@@ -167,6 +167,7 @@ CORS_ALLOW_HEADERS = [  # 허용할 헤더
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    "access_token",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -185,7 +186,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
