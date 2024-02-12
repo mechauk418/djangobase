@@ -19,6 +19,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=False, blank = False)
     updated_at = models.DateTimeField(auto_now=True, null=False, blank = False)
     subject = models.CharField(max_length=80, choices = subject_list)
+    hits = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

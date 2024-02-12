@@ -5,6 +5,7 @@ from .models import Article, Comment
 class CommentSerializer(serializers.ModelSerializer):
 
     create_username = serializers.ReadOnlyField(source='create_user.username')
+    article = serializers.ReadOnlyField(source='article.pk')
 
     class Meta:
         model = Comment
@@ -39,6 +40,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'create_username',
+            "hits",
             'created_at',
             "comments",
         ]
