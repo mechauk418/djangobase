@@ -63,4 +63,13 @@ class CommentViewSet(ModelViewSet):
         
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
     
-    
+
+class MyArticleView(ModelViewSet):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return Article.objects.filter(createuser=user)
+        else:
+            return Article.objects.none()
