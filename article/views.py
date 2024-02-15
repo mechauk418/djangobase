@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
-from .models import Article, Comment
-from .serializers import ArticleSerializer, CommentSerializer
+from .models import Article, Comment, LikeArticle, LikeComment
+from .serializers import ArticleSerializer, CommentSerializer, LikeCommentSerializer, LikeArticleSerializer
 # Create your views here.
 import datetime
 from rest_framework import status, response
 from rest_framework.response import Response
+from django.db.models import Count
+
 
 class ArticleViewSet(ModelViewSet):
 
@@ -45,8 +47,8 @@ class ArticleViewSet(ModelViewSet):
         serializer = self.get_serializer(instance)
 
         return response
-    
 
+    
 
 class CommentViewSet(ModelViewSet):
 
@@ -64,7 +66,7 @@ class CommentViewSet(ModelViewSet):
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
     
 
-class MyArticleView(ModelViewSet):
+class MyArticleViewSet(ModelViewSet):
     serializer_class = ArticleSerializer
 
     def get_queryset(self):
@@ -73,3 +75,52 @@ class MyArticleView(ModelViewSet):
             return Article.objects.filter(createuser=user)
         else:
             return Article.objects.none()
+        
+# class BestArticleView(ModelViewSet):
+
+class LikeArticleViewSet(ModelViewSet):
+
+    serializer_class = LikeArticleSerializer
+
+    def get_queryset(self):
+        article = Article.objects.get(pk=self.kwargs.get('pk'))
+        
+        return LikeArticle.objects.filter(article = article)
+    
+    def perform_create(self, serializer):
+        article = Article.objects.get(pk=self.kwargs.get("pk"))
+        like = LikeArticle.objects.filter(user=self.request.user, article = article)
+        if like.exists():
+            like.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer.save(
+            user=self.request.user,
+            article=Article.objects.get(pk=self.kwargs.get("pk")),
+        )
+
+class LikeCommentViewSet(ModelViewSet):
+
+    serializer_class = LikeCommentSerializer
+
+    def get_queryset(self):
+        comment = Comment.objects.get(pk=self.kwargs.get('pk'))
+        
+        return LikeComment.objects.filter(comment = comment)
+    
+    def perform_create(self, serializer):
+        comment = Comment.objects.get(pk=self.kwargs.get("pk"))
+        like = LikeComment.objects.filter(user=self.request.user, comment = comment)
+        if like.exists():
+            like.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer.save(
+            user=self.request.user,
+            comment=Comment.objects.get(pk=self.kwargs.get("pk")),
+        )
+
+
+class BestArticleViewSet(ModelViewSet):
+
+    serializer_class = ArticleSerializer
+
+    queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-count')

@@ -1,11 +1,39 @@
 from rest_framework import serializers
-from .models import Article, Comment, PostImage
+from .models import Article, Comment, PostImage, LikeArticle, LikeComment
+
+class LikeArticleSerializer(serializers.ModelSerializer):
+
+    user = serializers.ReadOnlyField(source="user.email")
+    article = serializers.ReadOnlyField(source="article.pk")
+
+    class Meta:
+        model = LikeArticle
+        fields = [
+            "pk",
+            "user",
+            "article",
+        ]
+
+class LikeCommentSerializer(serializers.ModelSerializer):
+
+    user = serializers.ReadOnlyField(source="user.email")
+    comment = serializers.ReadOnlyField(source="comment.pk")
+
+    class Meta:
+        model = LikeComment
+        fields = [
+            "pk",
+            "user",
+            "comment",
+        ]
 
 
 class CommentSerializer(serializers.ModelSerializer):
 
     create_username = serializers.ReadOnlyField(source='create_user.username')
-    # article = serializers.ReadOnlyField(source='article.pk')
+    article = serializers.ReadOnlyField(source='article.pk')
+    like_comment = LikeCommentSerializer(many=True, read_only=True)
+    like_count = serializers.IntegerField(source="comment_name.count", read_only=True)
 
     class Meta:
         model = Comment
@@ -14,7 +42,9 @@ class CommentSerializer(serializers.ModelSerializer):
             'content',
             'create_username',
             'created_at',
-            "article"
+            "article",
+            'like_comment',
+            'like_count'
         ]
 
 
@@ -44,6 +74,8 @@ class ArticleSerializer(serializers.ModelSerializer):
     create_username = serializers.ReadOnlyField(source='create_user.username')
     comments = ArticleInCommentSerializer(many=True, read_only=True)
     images = serializers.SerializerMethodField()
+    like_article = LikeArticleSerializer(many=True, read_only=True)
+    like_count = serializers.IntegerField(source="article_name.count", read_only=True)
 
     def get_images(self,obj):
         image = obj.image.all()
@@ -60,12 +92,14 @@ class ArticleSerializer(serializers.ModelSerializer):
             "hits",
             'created_at',
             "comments",
-            "images"
+            "images",
+            'like_count',
+            'like_article'
         ]
 
     def create(self, validated_data):
         instance = Article.objects.create(**validated_data)
-        image_set = self.context['request'].FIELS
+        image_set = self.context['request'].FILES
         for image_data in image_set.getlist('image'):
             ext = str(image_data).split('.')[-1]
             ext = ext.lower()
