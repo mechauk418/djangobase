@@ -50,7 +50,7 @@ class LikeArticle(models.Model):
 
 class LikeComment(models.Model):
 
-    comment = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comment_name')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='comment_name')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comment_like_user"
     )

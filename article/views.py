@@ -101,10 +101,10 @@ class LikeArticleViewSet(ModelViewSet):
 class LikeCommentViewSet(ModelViewSet):
 
     serializer_class = LikeCommentSerializer
-
-    def get_queryset(self):
+    queryset = LikeComment
+    
+    def list(self, request, *args, **kwargs):
         comment = Comment.objects.get(pk=self.kwargs.get('pk'))
-        
         return LikeComment.objects.filter(comment = comment)
     
     def perform_create(self, serializer):
@@ -124,3 +124,11 @@ class BestArticleViewSet(ModelViewSet):
     serializer_class = ArticleSerializer
 
     queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-count')
+
+
+class MyArticleViewSet(ModelViewSet):
+
+    serializer_class = ArticleSerializer
+    
+    def get_queryset(self):
+        return Article.objects.filter(create_user = self.request.user)

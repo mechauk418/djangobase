@@ -9,4 +9,5 @@ urlpatterns = [
     path("<int:pk>/like/", LikeArticleViewSet.as_view({"get": "list", "post":"create"}), name="like_article"),
     path("<int:article_pk>/comment/<int:pk>/like/", LikeCommentViewSet.as_view({"get": "list", "post":"create"}), name="like_comment"),
     path("bestarticle/", BestArticleViewSet.as_view({"post": "create", "get": "list"}), name="bestarticle"),
+    path("myarticle/", MyArticleViewSet.as_view({"get": "list"}), name="myarticle"),
 ]

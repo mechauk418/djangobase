@@ -71,6 +71,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
 
+    
     create_username = serializers.ReadOnlyField(source='create_user.username')
     comments = ArticleInCommentSerializer(many=True, read_only=True)
     images = serializers.SerializerMethodField()
@@ -89,12 +90,14 @@ class ArticleSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'create_username',
-            "hits",
             'created_at',
             "comments",
             "images",
             'like_count',
             'like_article'
+        ]
+        read_only_fields = [
+            "hits",
         ]
 
     def create(self, validated_data):
@@ -104,7 +107,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             ext = str(image_data).split('.')[-1]
             ext = ext.lower()
             if ext in ['jpg', 'jpeg','png',]:
-                PostImage.objects.create(article=instance, image=image_data, image_original=image_data)
+                PostImage.objects.create(article=instance, image=image_data)
             elif ext in ['gif','webp']:
                 PostImage.objects.create(article=instance, image_original=image_data)
         return instance
