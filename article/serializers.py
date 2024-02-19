@@ -4,7 +4,6 @@ from .models import Article, Comment, PostImage, LikeArticle, LikeComment
 class LikeArticleSerializer(serializers.ModelSerializer):
 
     user = serializers.ReadOnlyField(source="user.email")
-    article = serializers.ReadOnlyField(source="article.pk")
 
     class Meta:
         model = LikeArticle
@@ -13,11 +12,13 @@ class LikeArticleSerializer(serializers.ModelSerializer):
             "user",
             "article",
         ]
+        read_only_fields=[
+            'article'
+        ]
 
 class LikeCommentSerializer(serializers.ModelSerializer):
 
     user = serializers.ReadOnlyField(source="user.email")
-    comment = serializers.ReadOnlyField(source="comment.pk")
 
     class Meta:
         model = LikeComment
@@ -25,6 +26,9 @@ class LikeCommentSerializer(serializers.ModelSerializer):
             "pk",
             "user",
             "comment",
+        ]
+        read_only_fields=[
+            'comment'
         ]
 
 
@@ -94,7 +98,8 @@ class ArticleSerializer(serializers.ModelSerializer):
             "comments",
             "images",
             'like_count',
-            'like_article'
+            'like_article',
+            'hits',
         ]
         read_only_fields = [
             "hits",

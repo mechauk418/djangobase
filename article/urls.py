@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import ArticleViewSet, CommentViewSet, MyArticleViewSet, LikeArticleViewSet, LikeCommentViewSet, BestArticleViewSet
+from .views import (
+    ArticleViewSet, CommentViewSet, MyArticleViewSet, 
+    LikeArticleViewSet, LikeCommentViewSet, BestArticleViewSet,
+    MyCommentViewSet
+    )
+
+app_name="article"
+
 
 urlpatterns = [
     path("", ArticleViewSet.as_view({"get": "list", "post":'create',}), name="article_list"),
@@ -10,4 +17,5 @@ urlpatterns = [
     path("<int:article_pk>/comment/<int:pk>/like/", LikeCommentViewSet.as_view({"get": "list", "post":"create"}), name="like_comment"),
     path("bestarticle/", BestArticleViewSet.as_view({"post": "create", "get": "list"}), name="bestarticle"),
     path("myarticle/", MyArticleViewSet.as_view({"get": "list"}), name="myarticle"),
+    path("mycomment/", MyCommentViewSet.as_view({"get": "list"}), name="mycomment"),
 ]

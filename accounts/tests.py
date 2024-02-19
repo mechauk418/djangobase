@@ -12,7 +12,6 @@ class UserRegistrationAPITestCase(APITestCase):
     # 회원 가입
 
     def test_registration(self):
-
         register_uri = reverse("accounts:user_registration")
 
         user_data = {
@@ -52,14 +51,13 @@ class UserAPITestCase(APITestCase):
             "email": "test@naver.com",
             "password":"1q2w3e4r!!"
         }
-
-        response = self.client.post(login_uri, data=login_data)
+        client = APIClient()
+        response = client.post(login_uri, data=login_data)
         self.assertEqual(response.status_code,200)
-        
         # 토큰 검증
         token_verify_uri = '/accounts/token/verify/'
         access_token = response.json()['access']
-        verify_response = self.client.post(token_verify_uri, data={'token':access_token} )
+        verify_response = client.post(token_verify_uri, data={'token':access_token} )
         self.assertEqual(verify_response.status_code,200)
 
 
@@ -71,13 +69,13 @@ class UserAPITestCase(APITestCase):
             "email": "test@naver.com",
             "password":"1q2w3e4r!!"
         }
-        
+        client = APIClient()
         # 토큰 refresh 테스트
-        response = self.client.post(login_uri, data=login_data)
+        response = client.post(login_uri, data=login_data)
 
         token_refresh_uri = '/accounts/token/refresh/'
         refresh_token = response.cookies['refresh_token']
-        token_response = self.client.post(token_refresh_uri, headers={'refresh_token' : refresh_token} )
+        token_response = client.post(token_refresh_uri, headers={'refresh_token' : refresh_token} )
         self.assertEqual(token_response.status_code,200)
 
         # refresh 검증

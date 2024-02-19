@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     # app
     "accounts",
     "article",
+
+    #
+    'django_filters',
     # auth
     "rest_framework",
     "rest_framework.authtoken",
@@ -193,7 +196,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser'
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # dj-rest-auth

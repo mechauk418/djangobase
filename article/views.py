@@ -4,16 +4,21 @@ from .models import Article, Comment, LikeArticle, LikeComment
 from .serializers import ArticleSerializer, CommentSerializer, LikeCommentSerializer, LikeArticleSerializer
 # Create your views here.
 import datetime
-from rest_framework import status, response
+from rest_framework import status, response, filters
 from rest_framework.response import Response
 from django.db.models import Count
-
+from django_filters.rest_framework import DjangoFilterBackend
+from .permissions import IsOwnerOrReadOnly
 
 class ArticleViewSet(ModelViewSet):
 
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Article.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
-
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'subject', 'content')
+    # search_fields = ('title', 'create_user__username', 'content')
+    
     def perform_create(self, serializer):
         serializer.save(
             create_user = self.request.user
@@ -54,6 +59,7 @@ class CommentViewSet(ModelViewSet):
 
     queryset = Comment.objects.all().order_by('-pk')
     serializer_class = CommentSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(
@@ -65,18 +71,6 @@ class CommentViewSet(ModelViewSet):
         
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
     
-
-class MyArticleViewSet(ModelViewSet):
-    serializer_class = ArticleSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return Article.objects.filter(createuser=user)
-        else:
-            return Article.objects.none()
-        
-# class BestArticleView(ModelViewSet):
 
 class LikeArticleViewSet(ModelViewSet):
 
@@ -101,10 +95,10 @@ class LikeArticleViewSet(ModelViewSet):
 class LikeCommentViewSet(ModelViewSet):
 
     serializer_class = LikeCommentSerializer
-    queryset = LikeComment
-    
-    def list(self, request, *args, **kwargs):
+
+    def get_queryset(self):
         comment = Comment.objects.get(pk=self.kwargs.get('pk'))
+        
         return LikeComment.objects.filter(comment = comment)
     
     def perform_create(self, serializer):
@@ -122,13 +116,25 @@ class LikeCommentViewSet(ModelViewSet):
 class BestArticleViewSet(ModelViewSet):
 
     serializer_class = ArticleSerializer
-
     queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-count')
-
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'subject', 'content')
 
 class MyArticleViewSet(ModelViewSet):
-
     serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'subject', 'content')
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return Article.objects.filter(createuser=user)
+        else:
+            return Article.objects.none()
+        
+class MyCommentViewSet(ModelViewSet):
+    serializer_class = CommentSerializer
     
     def get_queryset(self):
-        return Article.objects.filter(create_user = self.request.user)
+        
+        return Comment.objects.filter(create_user=self.request.user)
