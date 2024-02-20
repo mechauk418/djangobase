@@ -12,27 +12,27 @@ class ArticleAPITestCase(APITestCase):
         register_uri = reverse("accounts:user_registration")
 
         user_data = {
-            "username": "test",
+            "username": "tester",
             "email": "test@naver.com",
             "password1": "1q2w3e4r!!",
             "password2": "1q2w3e4r!!"
         }
-        response = self.client.post(register_uri,data=user_data)
+        self.client.post(register_uri,data=user_data)
 
         client = APIClient()
         client.login(email="test@naver.com", password = '1q2w3e4r!!')
         client.force_authenticate(user=client)
         
+    # 글 목록
     def test_get_article(self):
         article_uri = reverse("article:article_list")
 
         response = self.client.get(article_uri)
 
-        print(response.content)
-
         self.assertEqual(response.status_code,200)
 
-    def test_post_article(self):
+    # 글 작성
+    def test_create_article(self):
 
         article_uri = reverse("article:article_list")
         article_data = {
@@ -41,9 +41,69 @@ class ArticleAPITestCase(APITestCase):
             "content":"test_content"
         }
         response = self.client.post(article_uri,article_data)
+        self.assertEqual(response.status_code,201)
 
-        print(response)
+    # 글 수정
+    def test_update_article(self):
 
-        get_response = self.client.get(article_uri)
+        article_uri = reverse("article:article_list")
+        article_data = {
+            "subject":"일반",
+            "title":"test_title",
+            "content":"test_content"
+        }
+        self.client.post(article_uri,article_data)
 
-        print(get_response.content)
+        detail_uri = reverse("article:article_detail",args=[1])
+        updated_data = {
+            "subject":"정보",
+            "title":"updated_test_title",
+            "content":"test_content"
+        }
+        response = self.client.put(detail_uri,updated_data)
+        
+        self.assertEqual(response.status_code,200)
+
+    # 글 삭제
+    def test_delete_article(self):
+        article_uri = reverse("article:article_list")
+        detail_uri = reverse("article:article_detail",args=[1])
+
+        article_data = {
+            "subject":"일반",
+            "title":"test_title",
+            "content":"test_content"
+        }
+        self.client.post(article_uri,article_data)
+        response = self.client.delete(detail_uri)
+
+        self.assertEqual(response.status_code,204)
+
+
+#댓글 테스트 추후 수정
+
+class CommentAPITestCase(APITestCase):
+
+    def setUp(self):
+
+        register_uri = reverse("accounts:user_registration")
+        user_data = {
+            "username": "tester",
+            "email": "test@naver.com",
+            "password1": "1q2w3e4r!!",
+            "password2": "1q2w3e4r!!"
+        }
+        self.client.post(register_uri,data=user_data)
+        print(self.client)
+        client = APIClient()
+        client.login(email="test@naver.com", password = '1q2w3e4r!!')
+        client.force_authenticate(user=client)
+        print(self.client)
+        print(client)
+        article_uri = reverse("article:article_list")
+        article_data = {
+            "subject":"일반",
+            "title":"test_title",
+            "content":"test_content"
+        }
+        response = self.client.post(article_uri,article_data)
