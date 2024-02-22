@@ -44,7 +44,7 @@ class ArticleViewSet(ModelViewSet):
                 instance.save()
     
         else: # 쿠키에 hit 값이 없을 경우(즉 현재 보는 게시글이 첫 게시글임)
-            response.set_cookie('hit', pk, expires=expires)
+            response.set_cookie('hit', pk, expires=expires, samesite='Lax')
             instance.hits += 1
             instance.save()
 
