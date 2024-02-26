@@ -9,6 +9,13 @@ from rest_framework.response import Response
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsOwnerOrReadOnly
+from django.http import JsonResponse, HttpResponse
+
+def ArticlePageInfo(request):
+    qs = Article.objects.all().count()
+    pages = (qs//20)+1
+    print(1)
+    return HttpResponse(pages)
 
 class ArticleViewSet(ModelViewSet):
 

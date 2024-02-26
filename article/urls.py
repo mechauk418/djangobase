@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     ArticleViewSet, CommentViewSet, MyArticleViewSet, 
     LikeArticleViewSet, LikeCommentViewSet, BestArticleViewSet,
-    MyCommentViewSet
+    MyCommentViewSet, ArticlePageInfo
     )
 
 app_name="article"
@@ -18,4 +18,5 @@ urlpatterns = [
     path("bestarticle/", BestArticleViewSet.as_view({"post": "create", "get": "list"}), name="bestarticle"),
     path("myarticle/", MyArticleViewSet.as_view({"get": "list"}), name="myarticle"),
     path("mycomment/", MyCommentViewSet.as_view({"get": "list"}), name="mycomment"),
+    path("pages/",ArticlePageInfo )
 ]
