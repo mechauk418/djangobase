@@ -11,13 +11,26 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsOwnerOrReadOnly
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from collections import OrderedDict
+from rest_framework.pagination import PageNumberPagination
 
 @csrf_exempt
 def ArticlePageInfo(request):
     qs = Article.objects.all().count()
     pages = (qs//20)+1
     print(1)
-    return HttpResponse(pages)
+    return HttpResponse(qs)
+
+class PostPageNumberPagination(PageNumberPagination):
+    page_size = 20 # 한 페이지 당 항목 개수
+
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('results', data),
+            ('pageCnt', self.page.paginator.num_pages),
+            ('curPage', self.page.number),
+            ('itemcount',self.page.paginator.count)
+        ]))
 
 class ArticleViewSet(ModelViewSet):
 
@@ -27,7 +40,8 @@ class ArticleViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
     # search_fields = ('title', 'create_user__username', 'content')
-    
+    pagination_class=PostPageNumberPagination
+
     def perform_create(self, serializer):
         serializer.save(
             create_user = self.request.user
