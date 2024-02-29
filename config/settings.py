@@ -165,11 +165,13 @@ CORS_ALLOW_HEADERS = [  # 허용할 헤더
     "access_token",
 ]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:8080",
+    "http://127.0.0.1:8080",
     "http://127.0.0.1:9000",
 ]
 
@@ -181,8 +183,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticatedOrReadOnly"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         # 'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # 'rest_framework.authentication.SessionAuthentication',
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ],
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
@@ -200,11 +202,10 @@ REST_AUTH = {
     "LOGIN_SERIALIZER": "accounts.serializers.CSLoginSerializer",
     # 'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
     "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
-    "SESSION_LOGIN": True,
+    "SESSION_LOGIN": False,
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "access_token",
     "JWT_AUTH_REFRESH_COOKIE": "refresh_token",
-    "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
     "JWT_AUTH_SECURE": True,
     "JWT_AUTH_HTTPONLY": True,
     "JWT_AUTH_SAMESITE": "Lax",
@@ -213,6 +214,15 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
+    'https://basic-board-service-front.vercel.app',
+    "https://www.rollthun.site",
+    "http://127.0.0.1:8080",
+]
+
+CSRF_COOKIE_SAMESITE='Lax'
+CSRF_COOKIE_HTTPONLY =True
 # allauth
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"

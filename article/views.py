@@ -10,7 +10,9 @@ from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsOwnerOrReadOnly
 from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def ArticlePageInfo(request):
     qs = Article.objects.all().count()
     pages = (qs//20)+1
