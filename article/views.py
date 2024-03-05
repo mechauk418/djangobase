@@ -85,21 +85,30 @@ class CommentViewSet(ModelViewSet):
         
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
     
+from django.http import JsonResponse
 
 class LikeArticleViewSet(ModelViewSet):
-
+    pagination_class=None
     serializer_class = LikeArticleSerializer
 
     def get_queryset(self):
         article = Article.objects.get(pk=self.kwargs.get('pk'))
         
         return LikeArticle.objects.filter(article = article)
-    
+
+    def create(self, request, *args, **kwargs):
+        article = Article.objects.get(pk=self.kwargs.get("pk"))
+        like = LikeArticle.objects.filter(user=self.request.user, article = article)
+        comment = {'response':'이미 추천하셨습니다.'}
+        if like.exists():
+            return JsonResponse(comment)
+        return super().create(request, *args, **kwargs)
+
+
     def perform_create(self, serializer):
         article = Article.objects.get(pk=self.kwargs.get("pk"))
         like = LikeArticle.objects.filter(user=self.request.user, article = article)
         if like.exists():
-            like.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         serializer.save(
             user=self.request.user,
@@ -114,18 +123,24 @@ class LikeCommentViewSet(ModelViewSet):
         comment = Comment.objects.get(pk=self.kwargs.get('pk'))
         
         return LikeComment.objects.filter(comment = comment)
-    
+
+    def create(self, request, *args, **kwargs):
+        comment = Comment.objects.get(pk=self.kwargs.get("pk"))
+        like = LikeComment.objects.filter(user=self.request.user, comment = comment)
+        comments = {'response':'이미 추천하셨습니다.'}
+        if like.exists():
+            return JsonResponse(comments)
+        return super().create(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         comment = Comment.objects.get(pk=self.kwargs.get("pk"))
         like = LikeComment.objects.filter(user=self.request.user, comment = comment)
         if like.exists():
-            like.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         serializer.save(
             user=self.request.user,
             comment=Comment.objects.get(pk=self.kwargs.get("pk")),
         )
-
 
 class BestArticleViewSet(ModelViewSet):
 

@@ -55,6 +55,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ArticleInCommentSerializer(serializers.ModelSerializer):
     create_username = serializers.ReadOnlyField(source='create_user.username')
+    like_count = serializers.IntegerField(source="comment_name.count", read_only=True)
 
     class Meta:
         model = Comment
@@ -62,6 +63,7 @@ class ArticleInCommentSerializer(serializers.ModelSerializer):
             'pk',
             'content',
             'create_username',
+            'like_count'
         ]
 
 
