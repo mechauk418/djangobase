@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -252,6 +252,8 @@ if os.getenv("DEBUG") == 'True':
     DEBUG = True
 else:
     DEBUG = False
+
+print(DEBUG)
 
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
