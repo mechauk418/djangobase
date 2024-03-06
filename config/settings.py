@@ -253,7 +253,6 @@ if os.getenv("DEBUG") == 'True':
 else:
     DEBUG = False
 
-print(DEBUG)
 
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'

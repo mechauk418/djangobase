@@ -118,3 +118,15 @@ class ArticleSerializer(serializers.ModelSerializer):
             elif ext in ['gif','webp']:
                 PostImage.objects.create(article=instance, image_original=image_data)
         return instance
+
+    def update(self, instance, validated_data):
+        image_set = self.context['request'].FILES
+        PostImage.objects.filter(article=instance).delete()
+        for image_data in image_set.getlist('image'):
+            ext = str(image_data).split('.')[-1]
+            ext = ext.lower()
+            if ext in ['jpg', 'jpeg','png',]:
+                PostImage.objects.create(article=instance, image=image_data)
+            elif ext in ['gif','webp']:
+                PostImage.objects.create(article=instance, image_original=image_data)
+        return instance
