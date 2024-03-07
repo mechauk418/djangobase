@@ -174,6 +174,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8080",
     "http://127.0.0.1:9000",
     'https://isdfans.site',
+    'https://api.isdfans.site',
 ]
 
 SITE_ID = 1
@@ -220,7 +221,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://basic-board-service-front.vercel.app',
     "https://www.rollthun.site",
     "http://127.0.0.1:8080",
-    'https://isdfans.site'
+    'https://isdfans.site',
+    'https://api.isdfans.site',
 ]
 
 CSRF_COOKIE_SAMESITE='Lax'
