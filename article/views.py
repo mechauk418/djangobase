@@ -145,21 +145,20 @@ class LikeCommentViewSet(ModelViewSet):
 class BestArticleViewSet(ModelViewSet):
 
     serializer_class = ArticleSerializer
-    queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-count')
+    queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-pk')
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
+    pagination_class = PostPageNumberPagination
 
 class MyArticleViewSet(ModelViewSet):
     serializer_class = ArticleSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
+    pagination_class=PostPageNumberPagination
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_authenticated:
-            return Article.objects.filter(createuser=user)
-        else:
-            return Article.objects.none()
+        return Article.objects.filter(create_user=user).order_by('-pk')
         
 class MyCommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer

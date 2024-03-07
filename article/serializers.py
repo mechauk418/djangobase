@@ -121,7 +121,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         image_set = self.context['request'].FILES
-        PostImage.objects.filter(article=instance).delete()
+        if image_set:
+            PostImage.objects.filter(article=instance).delete()
         for image_data in image_set.getlist('image'):
             ext = str(image_data).split('.')[-1]
             ext = ext.lower()
