@@ -130,4 +130,8 @@ class ArticleSerializer(serializers.ModelSerializer):
                 PostImage.objects.create(article=instance, image=image_data)
             elif ext in ['gif','webp']:
                 PostImage.objects.create(article=instance, image_original=image_data)
+        instance.subject = validated_data['subject']
+        instance.title = validated_data['title']
+        instance.content = validated_data['content']
+        instance.save()
         return instance
