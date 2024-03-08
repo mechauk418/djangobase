@@ -19,6 +19,6 @@ jobs:
       - name: Build the Docker image
         run: docker build -t drftest .
       - name: taging
-        run: docker tag drftest:latest mechauk/drftest:latest
+        run: docker tag drftest:latest mechauk418/drftest:latest
       - name: Push to Dockerhub
-        run: docker push mechauk/drftest:latest
+        run: docker push mechauk418/drftest:latest
