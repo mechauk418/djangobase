@@ -175,6 +175,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:9000",
     'https://isdfans.site',
     'https://api.isdfans.site',
+    'https://www.isdfans.site',
 ]
 
 SITE_ID = 1
@@ -219,7 +220,7 @@ REST_AUTH = {
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8080',
     'https://basic-board-service-front.vercel.app',
-    "https://www.rollthun.site",
+    'https://www.isdfans.site',
     "http://127.0.0.1:8080",
     'https://isdfans.site',
     'https://api.isdfans.site',
@@ -256,7 +257,6 @@ if os.getenv("DEBUG") == 'True':
     DEBUG = True
 else:
     DEBUG = False
-
 
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
