@@ -9,25 +9,25 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-      - uses: actions/checkout@v3
-      - name: Login Dockerhub
-        env:
-          DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD    
+      # - uses: actions/checkout@v3
+      # - name: Login Dockerhub
+      #   env:
+      #     DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      #     DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+      #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD    
 
-      - name: Build the Docker image
-        run: docker build -t drftest .
-      - name: taging
-        run: docker tag drftest:latest mechauk418/drftest:latest
-      - name: Push to Dockerhub
-        run: docker push mechauk418/drftest:latest
+      # - name: Build the Docker image
+      #   run: docker build -t drftest .
+      # - name: taging
+      #   run: docker tag drftest:latest mechauk418/drftest:latest
+      # - name: Push to Dockerhub
+      #   run: docker push mechauk418/drftest:latest
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: whoami
