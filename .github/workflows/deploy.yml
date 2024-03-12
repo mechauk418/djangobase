@@ -29,5 +29,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            sudo docker stop drftest
+            sudo docker rm drftest
             sudo docker pull mechauk418/drftest:latest
             sudo docker run --name drftest -p 443:8000 -d mechauk418/drftest:latest
