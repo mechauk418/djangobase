@@ -19,7 +19,7 @@ jobs:
         run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build the Docker image
-        run: sudo docker build -t mechauk418/drftest .
+        run: sudo docker build -f Dockerfile -t mechauk418/drftest .
       - name: Push to Dockerhub
         run: sudo docker push mechauk418/drftest
 
