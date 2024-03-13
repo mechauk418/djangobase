@@ -1,5 +1,7 @@
-FROM python:3.9-slim
+FROM python:3.9-slim as builder
 ENV PYTHONUNBUFFERED 1
+
+RUN pip install --upgrade pip
 
 RUN mkdir /app
 
