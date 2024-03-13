@@ -166,3 +166,6 @@ class MyCommentViewSet(ModelViewSet):
     def get_queryset(self):
         
         return Comment.objects.filter(create_user=self.request.user)
+    
+
+# test
