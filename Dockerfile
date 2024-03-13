@@ -1,7 +1,5 @@
-FROM python:3.9-slim as builder
+FROM python:3.9-slim
 ENV PYTHONUNBUFFERED 1
-RUN python3 -m venv venv && . venv/bin/activate
-RUN pip install --upgrade pip
 
 RUN mkdir /app
 
