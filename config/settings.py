@@ -259,7 +259,7 @@ else:
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
-if DEBUG: 
+if not DEBUG: 
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
