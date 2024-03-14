@@ -31,9 +31,9 @@ jobs:
           cat .env
 
       - name: Build the Docker image
-        run: sudo docker build --no-cache -t mechauk418/drftest2:latest .
+        run: sudo docker build --no-cache -t mechauk418/localtest:runner .
       - name: Push to Dockerhub
-        run: sudo docker push mechauk418/drftest2:latest
+        run: sudo docker push mechauk418/localtest:runner
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
@@ -45,5 +45,5 @@ jobs:
           script: |
             sudo docker stop drftest
             sudo docker rm drftest
-            sudo docker pull mechauk418/drftest2:latest
-            sudo docker run --name drftest -p 443:8000 -d mechauk418/drftest2:latest
+            sudo docker pull mechauk418/localtest:runner
+            sudo docker run --name drftest -p 443:8000 -d mechauk418/localtest:runner
