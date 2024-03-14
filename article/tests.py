@@ -107,3 +107,6 @@ class CommentAPITestCase(APITestCase):
             "content":"test_content"
         }
         response = self.client.post(article_uri,article_data)
+
+
+# 좋아요 테스트 추후 수정
