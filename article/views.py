@@ -159,10 +159,15 @@ class MyArticleViewSet(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Article.objects.filter(create_user=user).order_by('-pk')
-        
+
 class MyCommentViewSet(ModelViewSet):
-    serializer_class = CommentSerializer
-    
+    serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'subject', 'content')
+    pagination_class=PostPageNumberPagination
+
     def get_queryset(self):
+        user = self.request.user
+        articlelist = Comment.objects.filter(create_user=user).values('article_id').distinct()
         
-        return Comment.objects.filter(create_user=self.request.user)
+        return Article.objects.filter(id__in=articlelist).order_by('-pk')

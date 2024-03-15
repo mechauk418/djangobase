@@ -47,3 +47,4 @@ jobs:
             sudo docker rm drftest
             sudo docker pull mechauk418/localtest:runner
             sudo docker run --name drftest -p 443:8000 -d mechauk418/localtest:runner
+            sudo docker rmi -f $(docker images -f "dangling=true" -q)
