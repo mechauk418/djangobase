@@ -19,21 +19,20 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
 
-BASE_URL = "http://api.isdfans.site/"
+BASE_URL = "http://localhost:8000/"
 
-KAKAO_CALLBACK_URI = "https://www.isdfans.site/login"
+KAKAO_CALLBACK_URI = "http://localhost:8080/login"
 
 def kakao_callback(request):
-    rest_api_key = ''
+    rest_api_key = 'e4b27957dc8121f1a84525055226da02'
     code = request.GET.get('code')
     redirect_uri = KAKAO_CALLBACK_URI
-
     token_req = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={rest_api_key}&redirect_uri={redirect_uri}&code={code}"
     )
 
     token_req_json = token_req.json()
-
+    print(token_req_json)
     error = token_req_json.get("error")
     if error is not None:
         raise JSONDecodeError(error)
@@ -47,6 +46,7 @@ def kakao_callback(request):
     if error is not None:
         raise JSONDecodeError(error)
     kakao_account = profile_json.get("kakao_account")
+    print(kakao_account)
     email = kakao_account.get("email")
 
     try:
@@ -72,9 +72,12 @@ def kakao_callback(request):
         # refresh_token을 headers 문자열에서 추출함
         refresh_token = accept.headers['Set-Cookie']
         refresh_token = refresh_token.replace('=',';').replace(',',';').split(';')
-        token_index = refresh_token.index(' refresh_token')
+        print(refresh_token)
+        token_index = refresh_token.index('refresh_token')
+        print(token_index)
         cookie_max_age = 3600 * 24 * 14 # 14 days
         refresh_token = refresh_token[token_index+1]
+        print(refresh_token)
         accept_json.pop("user", None)
         response_cookie = JsonResponse(accept_json)
         response_cookie.set_cookie('refresh_token', refresh_token, max_age=cookie_max_age, httponly=True, samesite='Lax')
@@ -82,7 +85,24 @@ def kakao_callback(request):
     
     except User.DoesNotExist:
         
+        data = {"access_token": access_token, "code": code}
+        accept = requests.post(f"{BASE_URL}accounts/kakao/login/finish/", data=data)
+        accept_status = accept.status_code
+        if accept_status != 200:
+            return JsonResponse({"err_msg": "failed to signup"}, status=accept_status)
+        # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
 
+        accept_json = accept.json()
+        # refresh_token을 headers 문자열에서 추출함
+        refresh_token = accept.headers['Set-Cookie']
+        refresh_token = refresh_token.replace('=',';').replace(',',';').split(';')
+        token_index = refresh_token.index('refresh_token')
+        refresh_token = refresh_token[token_index+1]
+
+        accept_json.pop("user", None)
+        response_cookie = JsonResponse(accept_json)
+        response_cookie.set_cookie('refresh_token', refresh_token, max_age=cookie_max_age, httponly=True, samesite='Lax')
+        return response_cookie
 
 
 

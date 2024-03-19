@@ -166,6 +166,7 @@ CORS_ALLOW_HEADERS = [  # 허용할 헤더
     "x-csrftoken",
     "x-requested-with",
     "access_token",
+    'set-cookie'
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
@@ -179,7 +180,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://www.isdfans.site',
 ]
 
-SITE_ID = 1
+SITE_ID = 3
 
 # DRF
 
@@ -261,6 +262,8 @@ else:
 
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
+
+DEBUG = True
 
 if DEBUG: 
 
