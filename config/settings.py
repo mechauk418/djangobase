@@ -180,7 +180,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://www.isdfans.site',
 ]
 
-SITE_ID = 3
+SITE_ID = 1
 
 # DRF
 
