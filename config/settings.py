@@ -263,8 +263,6 @@ else:
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
-DEBUG = True
-
 if DEBUG: 
 
     MEDIA_URL = '/media/'
