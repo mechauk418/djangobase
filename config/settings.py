@@ -263,7 +263,7 @@ else:
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
-DEBUT = True
+DEBUG = True
 
 # if DEBUG: 
 
