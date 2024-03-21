@@ -86,7 +86,7 @@ def kakao_callback(request):
         accept = requests.post(f"{BASE_URL}accounts/kakao/login/finish/", data=data)
         accept_status = accept.status_code
         if accept_status != 200:
-            return JsonResponse({"err_msg": "failed to signup"}, status=accept_status)
+            return JsonResponse({"err_msg": "failed to signup", 'error_log':accept_status, "sendcode": data}, status=accept_status)
         # user의 pk, email, first name, last name과 Access Token, Refresh token 가져옴
 
         accept_json = accept.json()
