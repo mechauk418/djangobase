@@ -12,6 +12,7 @@ from json.decoder import JSONDecodeError
 from django.http import JsonResponse
 import requests
 from rest_framework import status
+import os
 
 class UserViewSet(ModelViewSet):
 
@@ -19,12 +20,12 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
 
-BASE_URL = "http://localhost:8000/"
+BASE_URL = "https://api.isdfans.site/"
 
-KAKAO_CALLBACK_URI = "http://localhost:8080/login"
+KAKAO_CALLBACK_URI = "https://www.isdfans.site/login"
 
 def kakao_callback(request):
-    rest_api_key = 'e4b27957dc8121f1a84525055226da02'
+    rest_api_key = os.getenv("REST_API_KEY")
     code = request.GET.get('code')
     redirect_uri = KAKAO_CALLBACK_URI
     token_req = requests.get(
@@ -46,7 +47,6 @@ def kakao_callback(request):
     if error is not None:
         raise JSONDecodeError(error)
     kakao_account = profile_json.get("kakao_account")
-    print(kakao_account)
     email = kakao_account.get("email")
 
     try:
@@ -72,12 +72,9 @@ def kakao_callback(request):
         # refresh_token을 headers 문자열에서 추출함
         refresh_token = accept.headers['Set-Cookie']
         refresh_token = refresh_token.replace('=',';').replace(',',';').split(';')
-        print(refresh_token)
-        token_index = refresh_token.index('refresh_token')
-        print(token_index)
+        token_index = refresh_token.index(' refresh_token')
         cookie_max_age = 3600 * 24 * 14 # 14 days
         refresh_token = refresh_token[token_index+1]
-        print(refresh_token)
         accept_json.pop("user", None)
         response_cookie = JsonResponse(accept_json)
         response_cookie.set_cookie('refresh_token', refresh_token, max_age=cookie_max_age, httponly=True, samesite='Lax')
@@ -96,9 +93,9 @@ def kakao_callback(request):
         # refresh_token을 headers 문자열에서 추출함
         refresh_token = accept.headers['Set-Cookie']
         refresh_token = refresh_token.replace('=',';').replace(',',';').split(';')
-        token_index = refresh_token.index('refresh_token')
+        token_index = refresh_token.index(' refresh_token')
         refresh_token = refresh_token[token_index+1]
-
+        cookie_max_age = 3600 * 24 * 14 # 14 days
         accept_json.pop("user", None)
         response_cookie = JsonResponse(accept_json)
         response_cookie.set_cookie('refresh_token', refresh_token, max_age=cookie_max_age, httponly=True, samesite='Lax')

@@ -28,6 +28,7 @@
 #           echo DATABASE_HOST=${{secrets.DATABASE_HOST}} >> .env
 #           echo DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} >> .env
 #           echo DATABASE_NAME=${{secrets.DATABASE_NAME}} >> .env
+#           echo REST_API_KEY=${{secrets.REST_API_KEY}} >> .env
 #           cat .env
 
 #       - name: Build the Docker image
