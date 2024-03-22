@@ -22,15 +22,25 @@ class PostPageNumberPagination(PageNumberPagination):
             ('curPage', self.page.number),
             ('itemcount',self.page.paginator.count)
         ]))
+    
+class CustomSearchFilter(filters.SearchFilter):
+    def get_search_fields(self, view, request):
+        if request.query_params.get('title_only'):
+            return ['title']
+        if request.query_params.get('create_user__username_only'):
+            return ['create_user__username']
+        if request.query_params.get('content_only'):
+            return ['content']
+        return super().get_search_fields(view, request)
 
 class ArticleViewSet(ModelViewSet):
 
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Article.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ('title', 'create_user__username', 'subject', 'content')
-    # search_fields = ('title', 'create_user__username', 'content')
+    filter_backends = [DjangoFilterBackend, CustomSearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'content')
+    search_fields = ('title', 'create_user__username', 'content')
     pagination_class=PostPageNumberPagination
 
     def perform_create(self, serializer):
