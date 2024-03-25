@@ -41,7 +41,7 @@ class ArticleViewSet(ModelViewSet):
     queryset = Article.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
     filter_backends = [DjangoFilterBackend, CustomSearchFilter]
-    filterset_fields = ('title', 'create_user__username', 'content')
+    filterset_fields = ('title', 'create_user__username', 'content', 'subject')
     search_fields = ('title', 'create_user__username', 'content')
     pagination_class=PostPageNumberPagination
 
