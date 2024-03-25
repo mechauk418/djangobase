@@ -31,6 +31,8 @@ class CustomSearchFilter(filters.SearchFilter):
             return ['create_user__username']
         if request.query_params.get('content_only'):
             return ['content']
+        if request.query_params.get('title_content_only'):
+            return ['title','content']
         return super().get_search_fields(view, request)
 
 class ArticleViewSet(ModelViewSet):
