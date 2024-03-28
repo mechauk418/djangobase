@@ -39,4 +39,4 @@ django rest framework로 웹페이지를 구축할때 기본이 되는 틀을 �
 
 ### 4. 개발 과정
 
-[DRF를 활용하여 게시판 만들기](https://velog.io/@mechauk418/series/FastAPI%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+[DRF를 활용하여 게시판 만들기]('https://velog.io/@mechauk418/series/FastAPI%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0)
