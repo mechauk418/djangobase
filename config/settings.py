@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # app
     "accounts",
     "article",
+    "todo",
 
     #
     'django_filters',
@@ -264,7 +265,7 @@ else:
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
-# DEBUG = True
+DEBUG = True
 
 if DEBUG: 
 
