@@ -189,7 +189,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticatedOrReadOnly"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ],
     'DEFAULT_PARSER_CLASSES': (
@@ -265,7 +265,7 @@ else:
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
-DEBUG = True
+# DEBUG = True
 
 if DEBUG: 
 
