@@ -32,6 +32,7 @@ jobs:
           echo GOOGLE_CLIENT=${{secrets.GOOGLE_CLIENT}} >> .env
           echo GOOGLE_PASSWORD=${{secrets.GOOGLE_PASSWORD}} >> .env
           echo STATE=${{secrets.STATE}} >> .env
+          echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
           cat .env
 
       - name: Build the Docker image
