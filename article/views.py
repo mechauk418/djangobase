@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
+from urllib3 import HTTPResponse
 from .models import Article, Comment, LikeArticle, LikeComment
 from .serializers import ArticleSerializer, CommentSerializer, LikeCommentSerializer, LikeArticleSerializer
 # Create your views here.
@@ -183,3 +184,18 @@ class MyCommentViewSet(ModelViewSet):
         articlelist = Comment.objects.filter(create_user=user).values('article_id').distinct()
         
         return Article.objects.filter(id__in=articlelist).order_by('-pk')
+    
+import os
+
+def envview(request):
+
+
+    testdict = {
+        "SECRET_KEY":os.environ["SECRET_KEY"],
+        "DATABASE_HOST":os.environ["DATABASE_HOST"],
+        "DATABASE_NAME":os.environ["DATABASE_NAME"],
+        "STATE":os.environ["STATE"],
+        "경로": os.path.abspath(__file__)
+    }
+
+    return JsonResponse(testdict)
