@@ -195,7 +195,11 @@ def envview(request):
         "DATABASE_HOST":os.environ["DATABASE_HOST"],
         "DATABASE_NAME":os.environ["DATABASE_NAME"],
         "STATE":os.environ["STATE"],
-        "경로": os.path.abspath(__file__)
+        "경로": os.path.abspath(__file__),
+        "폴더": os.listdir('./'),
+        "폴더2": os.listdir('../'),
     }
 
     return JsonResponse(testdict)
+
+# # CMD ["bash", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
