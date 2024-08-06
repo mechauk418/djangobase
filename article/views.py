@@ -8,7 +8,7 @@ import datetime
 from rest_framework import status, response, filters
 from rest_framework.response import Response
 from django.db.models import Count
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework as asfilters
 from .permissions import IsOwnerOrReadOnly
 from collections import OrderedDict
 from rest_framework.pagination import PageNumberPagination
@@ -41,7 +41,7 @@ class ArticleViewSet(ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Article.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
-    filter_backends = [DjangoFilterBackend, CustomSearchFilter]
+    filter_backends = [asfilters.DjangoFilterBackend, CustomSearchFilter]
     filterset_fields = ('title', 'create_user__username', 'content', 'subject')
     search_fields = ('title', 'create_user__username', 'content')
     pagination_class=PostPageNumberPagination
@@ -159,13 +159,13 @@ class BestArticleViewSet(ModelViewSet):
 
     serializer_class = ArticleSerializer
     queryset = Article.objects.annotate(count=Count('article_name')).filter(count__gt=1).order_by('-pk')
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [asfilters.DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
     pagination_class = PostPageNumberPagination
 
 class MyArticleViewSet(ModelViewSet):
     serializer_class = ArticleSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [asfilters.DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
     pagination_class=PostPageNumberPagination
 
@@ -175,7 +175,7 @@ class MyArticleViewSet(ModelViewSet):
 
 class MyCommentViewSet(ModelViewSet):
     serializer_class = ArticleSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [asfilters.DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ('title', 'create_user__username', 'subject', 'content')
     pagination_class=PostPageNumberPagination
 

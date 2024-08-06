@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "article",
 
     #
-    'django_filters',
+    "django_filters",
     "storages",
     # auth
     "rest_framework",
