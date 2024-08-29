@@ -35,11 +35,6 @@ jobs:
           echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
           cat .env
 
-      - name: Build the Docker image
-        run: sudo docker build --no-cache -t mechauk418/localtest:runner .
-      - name: Push to Dockerhub
-        run: sudo docker push mechauk418/localtest:runner
-
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -48,8 +43,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            sudo docker stop drftest
-            sudo docker rm drftest
-            sudo docker pull mechauk418/localtest:runner
-            sudo docker run --name drftest -p 443:8000 -d mechauk418/localtest:runner
+            sudo docker-compose pull
+            sudo docker-compose build
             sudo docker image prune -f
+            sudo docker-compose up -d
