@@ -20,20 +20,20 @@ jobs:
 
       - name: Generate Environment Variables File for Production
         run: |
-          touch .env
-          echo AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}} >> .env
-          echo AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}} >> .env
-          echo AWS_STORAGE_BUCKET_NAME=${{secrets.AWS_STORAGE_BUCKET_NAME}} >> .env
-          echo DEBUG=${{secrets.DEBUG}} >> .env
-          echo DATABASE_HOST=${{secrets.DATABASE_HOST}} >> .env
-          echo DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} >> .env
-          echo DATABASE_NAME=${{secrets.DATABASE_NAME}} >> .env
-          echo REST_API_KEY=${{secrets.REST_API_KEY}} >> .env
-          echo GOOGLE_CLIENT=${{secrets.GOOGLE_CLIENT}} >> .env
-          echo GOOGLE_PASSWORD=${{secrets.GOOGLE_PASSWORD}} >> .env
-          echo STATE=${{secrets.STATE}} >> .env
-          echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
-          cat .env
+          touch ./djangobase2/env
+          echo AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}} >> ./djangobase2/env
+          echo AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}} >> ./djangobase2/env
+          echo AWS_STORAGE_BUCKET_NAME=${{secrets.AWS_STORAGE_BUCKET_NAME}} >> ./djangobase2/env
+          echo DEBUG=${{secrets.DEBUG}} >> ./djangobase2/env
+          echo DATABASE_HOST=${{secrets.DATABASE_HOST}} >> ./djangobase2/env
+          echo DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} >> ./djangobase2/env
+          echo DATABASE_NAME=${{secrets.DATABASE_NAME}} >> ./djangobase2/env
+          echo REST_API_KEY=${{secrets.REST_API_KEY}} >> ./djangobase2/env
+          echo GOOGLE_CLIENT=${{secrets.GOOGLE_CLIENT}} >> ./djangobase2/env
+          echo GOOGLE_PASSWORD=${{secrets.GOOGLE_PASSWORD}} >> ./djangobase2/env
+          echo STATE=${{secrets.STATE}} >> ./djangobase2/env
+          echo SECRET_KEY=${{secrets.SECRET_KEY}} >> ./djangobase2/env
+          cat ./djangobase2/env
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
