@@ -44,7 +44,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             sudo ls -a
-            sudo docker-compose -f docker-compose.yml pull
             sudo docker-compose -f docker-compose.yml build
             sudo docker image prune -f
             sudo docker-compose -f docker-compose.yml up -d
