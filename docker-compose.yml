@@ -2,7 +2,7 @@ version: "3.9"
 services:
   backend:
     build:
-      context: /djangobase2
+      context: ./djangobase2
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
