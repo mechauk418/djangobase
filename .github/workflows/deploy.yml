@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+      
+      - name: checkls
+        run: ls -al
+        run: cat docker-compose.yml
 
       - name: Login Dockerhub
         env:
