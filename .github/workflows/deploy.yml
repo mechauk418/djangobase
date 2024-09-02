@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: checkls
-        run: ls -al
+        run: pwd
 
       - name: checkcat
         run: cat docker-compose.yml
@@ -50,6 +50,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             sudo ls -a
-            sudo docker-compose -f /djangobase2/docker-compose.yml build
+            sudo docker-compose -f ./djangobase2/docker-compose.yml build
             sudo docker image prune -f
-            sudo docker-compose -f /djangobase2/docker-compose.yml up -d
+            sudo docker-compose -f ./djangobase2/docker-compose.yml up -d
