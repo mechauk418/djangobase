@@ -41,6 +41,11 @@ jobs:
           echo SECRET_KEY=${{secrets.SECRET_KEY}} >> ./djangobase2/env
           cat ./djangobase2/env
 
+      - name: Build the Docker image
+        run: sudo docker-compose -f docker-compose.yml build
+      - name: Push to Dockerhub
+        run: sudo docker-compose -f docker-compose.yml push
+
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -50,6 +55,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             sudo ls -a
+            sudo pwd
             sudo docker-compose -f ./djangobase2/docker-compose.yml build
             sudo docker image prune -f
             sudo docker-compose -f ./djangobase2/docker-compose.yml up -d
