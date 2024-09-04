@@ -42,6 +42,7 @@ jobs:
           cat ./djangobase2/env
 
       - name: Build the Docker image
+        run: ls -al
         run: docker-compose build
       - name: Push to Dockerhub
         run: sudo docker-compose up
