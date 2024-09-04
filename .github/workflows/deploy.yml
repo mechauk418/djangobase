@@ -44,7 +44,7 @@ jobs:
       - name: Build the Docker image
         run: ls -al
       - name: ls
-        run: docker-compose build
+        run: docker-compose up
       - name: Push to Dockerhub
         run: sudo docker-compose up
 
