@@ -42,9 +42,9 @@ jobs:
           cat ./djangobase2/env
 
       - name: Build the Docker image
-        run: docker-compose -f docker-compose.yml build
+        run: sudo docker-compose build
       - name: Push to Dockerhub
-        run: docker-compose -f docker-compose.yml push
+        run: sudo docker-compose up
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
