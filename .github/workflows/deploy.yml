@@ -46,7 +46,7 @@ jobs:
       - name: build up
         run: docker compose -f docker-compose.yml up -d
       - name: Push to Dockerhub
-        run: sudo docker-compose up
+        run: docker-compose up
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
