@@ -56,6 +56,4 @@ jobs:
           script: |
             sudo ls -a
             sudo pwd
-            sudo docker-compose -f ./djangobase2/docker-compose.yml build
-            sudo docker image prune -f
-            sudo docker-compose -f ./djangobase2/docker-compose.yml up -d
+            sudo docker images
