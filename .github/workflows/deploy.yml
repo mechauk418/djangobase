@@ -44,9 +44,7 @@ jobs:
       - name: Build the Docker image
         run: ls -al
       - name: build up
-        run: docker compose -f docker-compose.yml up -d
-      - name: Push to Dockerhub
-        run: docker compose up -d
+        run: docker compose -f docker-compose.yml up -d --build
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
