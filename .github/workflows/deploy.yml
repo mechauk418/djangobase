@@ -44,7 +44,9 @@ jobs:
       - name: Build the Docker image
         run: ls -al
       - name: build up
-        run: docker compose -f docker-compose.yml up -d --build
+        run: docker compose build --no-cache
+      - name: push
+        run: docker compose push
 
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
@@ -56,4 +58,4 @@ jobs:
           script: |
             sudo ls -a
             sudo pwd
-            sudo docker images
+            sudo docker compose -f docker-compose.yml up -d
