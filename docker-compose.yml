@@ -3,13 +3,14 @@ services:
     build:
       context: ./djangobase2
       dockerfile: Dockerfile
+    image: mechauk418/backend:latest
     ports:
       - "8000:8000"
 
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
   
   nginx:
-    image: nginx:latest
+    image: mechauk418/nginx:latest
     ports:
       - "80:80"
     volumes:
