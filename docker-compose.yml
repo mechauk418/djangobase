@@ -10,6 +10,9 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
   
   nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     image: mechauk418/nginx:latest
     ports:
       - "80:80"
