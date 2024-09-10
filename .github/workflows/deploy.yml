@@ -58,5 +58,5 @@ jobs:
           script: |
             sudo ls -a
             sudo pwd
-            sudo docker compose pull backend
-            sudo docker compose pull nginx
+            sudo docker compose pull mechauk418/backend:runner
+            sudo docker compose pull mechauk418/nginx:latest
