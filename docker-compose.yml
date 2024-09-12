@@ -17,6 +17,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
