@@ -14,7 +14,7 @@ jobs:
       
       - name: checkls
         run: pwd
-
+        
       - name: Login Dockerhub
         uses: docker/login-action@v3
         with:
@@ -65,5 +65,7 @@ jobs:
           script: |
             sudo ls -a
             sudo pwd
+            sudo docker pull mechauk418/backend:latest
+            sudo docker pull mechauk418/nginx:latest
             sudo docker image prune -f
             sudo docker compose -f docker-compose.yml up -d
