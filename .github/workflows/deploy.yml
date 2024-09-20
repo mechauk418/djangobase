@@ -38,7 +38,7 @@ jobs:
           echo SECRET_KEY=${{secrets.SECRET_KEY}} >> ./djangobase2/.env
           cat ./djangobase2/.env
 
-      - name: Build the Docker image
+      - name: Build the Docker images
         run: ls -al
       - name: build up
         run: docker compose build --no-cache
