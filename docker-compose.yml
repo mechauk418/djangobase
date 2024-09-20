@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./djangobase2
+      dockerfile: Dockerfile
+    image: mechauk418/backend:latest
+    ports:
+      - "8000:8000"
+
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+  
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: mechauk418/nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+    command: [nginx-debug, '-g', 'daemon off;']

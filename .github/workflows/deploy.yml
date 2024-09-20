@@ -38,6 +38,13 @@ jobs:
           echo SECRET_KEY=${{secrets.SECRET_KEY}} >> ./djangobase2/.env
           cat ./djangobase2/.env
 
+      - name: Build the Docker image
+        run: ls -al
+      - name: build up
+        run: docker compose build --no-cache
+      - name: push
+        run: docker compose push
+
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
