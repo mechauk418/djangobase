@@ -299,7 +299,7 @@ DATABASES = {
         "NAME": os.getenv("DATABASE_NAME"),
         "USER": 'mechauk',
         "PASSWORD": os.getenv("DATABASE_PASSWORD"), # 데이터베이스 생성 시 작성한 패스워드
-        "HOST": os.getenv("DATABASE_HOST"), # 코드 블럭 아래 이미지 참고하여 입력
+        "HOST": os.getenv("DATABASE_HOST"),
         "PORT": "5432",
     }
 }
