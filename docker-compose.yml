@@ -3,7 +3,7 @@ services:
     build:
       context: ./djangobase2
       dockerfile: Dockerfile
-    image: mechauk418/backend
+    image: mechauk418/backend:latest
     ports:
       - "8000:8000"
 
@@ -13,7 +13,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    image: mechauk418/nginx
+    image: mechauk418/nginx:latest
     ports:
       - "80:80"
     depends_on:
