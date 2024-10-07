@@ -190,12 +190,12 @@ import os
 def envview(request):
 
     def get_client_ip(request):
-        # x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        # if x_forwarded_for:
-        #     ip = x_forwarded_for.split(',')[0]
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            xff = x_forwarded_for.split(',')[0]
         # else:
         ip = request.META.get('REMOTE_ADDR')
-        return ip
+        return [ip,xff]
 
     testdict = {
         "SECRET_KEY":os.environ["SECRET_KEY"],
