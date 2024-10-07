@@ -189,6 +189,13 @@ import os
 
 def envview(request):
 
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
 
     testdict = {
         "SECRET_KEY":os.environ["SECRET_KEY"],
@@ -198,6 +205,7 @@ def envview(request):
         "경로": os.path.abspath(__file__),
         "폴더": os.listdir('./'),
         "폴더2": os.listdir('../'),
+        "IP":get_client_ip(request)
     }
 
     return JsonResponse(testdict)
