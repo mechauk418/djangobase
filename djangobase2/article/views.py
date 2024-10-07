@@ -98,7 +98,7 @@ class CommentViewSet(ModelViewSet):
         
         return super().get_queryset().filter(article=self.kwargs.get("article_pk"))
     
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 
 class LikeArticleViewSet(ModelViewSet):
     pagination_class=None
@@ -206,7 +206,13 @@ def envview(request):
         "폴더": os.listdir('./'),
         "폴더2": os.listdir('../'),
         "IP":get_client_ip(request),
-        "xreal":request.META
     }
 
     return JsonResponse(testdict)
+
+def metadate(request):
+    values = request.META   
+    html = []
+    for k in sorted(values):
+        html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, values[k]))
+    return HttpResponse('<table>%s</table>' % '\n'.join(html))
