@@ -196,7 +196,7 @@ def envview(request):
         # else:
         ip = request.META.get('REMOTE_ADDR')
         return [ip,xff]
-
+    
     testdict = {
         "SECRET_KEY":os.environ["SECRET_KEY"],
         "DATABASE_HOST":os.environ["DATABASE_HOST"],
@@ -205,7 +205,8 @@ def envview(request):
         "경로": os.path.abspath(__file__),
         "폴더": os.listdir('./'),
         "폴더2": os.listdir('../'),
-        "IP":get_client_ip(request)
+        "IP":get_client_ip(request),
+        "xreal":request.META
     }
 
     return JsonResponse(testdict)
