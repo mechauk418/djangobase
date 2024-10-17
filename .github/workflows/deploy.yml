@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      
-      - name: checkls
-        run: pwd
         
       - name: Login Dockerhub
         uses: docker/login-action@v3
@@ -39,10 +36,8 @@ jobs:
           cat ./djangobase2/.env
 
       - name: Build the Docker images
-        run: ls -al
-      - name: build up
         run: docker compose build --no-cache
-      - name: push
+      - name: Push the Docker images
         run: docker compose push
       - name: copy file via ssh password
         uses: appleboy/scp-action@master

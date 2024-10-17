@@ -195,7 +195,6 @@ def google_callback(request):
         refresh_token = refresh_token.replace('=',';').replace(',',';').split(';')
         token_index = refresh_token.index(' refresh_token')
         refresh_token = refresh_token[token_index+1]
-        print(accept_json)
         accept_json.pop("user", None)
         response_cookie = JsonResponse(accept_json)
         response_cookie.set_cookie('refresh_token', refresh_token, max_age=cookie_max_age, httponly=True, samesite='Lax', domain='.isdfans.site')
