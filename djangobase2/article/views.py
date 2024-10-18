@@ -12,6 +12,9 @@ from django_filters import rest_framework as asfilters
 from .permissions import IsOwnerOrReadOnly
 from collections import OrderedDict
 from rest_framework.pagination import PageNumberPagination
+import logging
+
+logger = logging.getLogger(__name__)
 
 class PostPageNumberPagination(PageNumberPagination):
     page_size = 20 # 한 페이지 당 항목 개수
@@ -50,6 +53,7 @@ class ArticleViewSet(ModelViewSet):
         serializer.save(
             create_user = self.request.user
         )
+        logging.warning('article write')
 
     def retrieve(self, request,pk=None, *args, **kwargs):
 
