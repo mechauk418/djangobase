@@ -318,54 +318,54 @@ if not os.path.exists(LOG_DIR):
 
 subprocess.call(['chmod', '755', LOG_DIR])
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': { # debug = false 판단
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': { # debug = true 판단
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
-    'formatters': {
-        'django.server': {
-            '()': 'django.utils.log.ServerFormatter',
-            'format': '[{server_time}] {message}',
-            'style': '{',
-        },
-        'standard': {
-            '()': 'django.utils.log.ServerFormatter',
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter':'standard'
-        },
-        'debug_log':{
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'formatter':'standard'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-        'user_log': {
-            'handlers': ['debug_log'],
-            'level': 'DEBUG',
-        },
-        'django.server': {
-            'handlers': ['django.server'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_false': { # debug = false 판단
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#         'require_debug_true': { # debug = true 판단
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'formatters': {
+#         'django.server': {
+#             '()': 'django.utils.log.ServerFormatter',
+#             'format': '[{server_time}] {message}',
+#             'style': '{',
+#         },
+#         'standard': {
+#             '()': 'django.utils.log.ServerFormatter',
+#             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'INFO',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter':'standard'
+#         },
+#         'debug_log':{
+#             'level': 'DEBUG',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'formatter':'standard'
+#         }
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#         'user_log': {
+#             'handlers': ['debug_log'],
+#             'level': 'DEBUG',
+#         },
+#         'django.server': {
+#             'handlers': ['django.server'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     }
+# }
