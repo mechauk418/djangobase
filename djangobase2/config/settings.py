@@ -326,6 +326,7 @@ DEFAULT_LOGGING = {
             'style': '{',
         },
         'standard': {
+            '()': 'django.utils.log.ServerFormatter',
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         },
     },
@@ -338,15 +339,18 @@ DEFAULT_LOGGING = {
         },
         'debug_log':{
             'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'filename': BASE_DIR / "logs/django_log.log",
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / f'logs/django_log.log',
             'formatter':'standard'
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console','debug_log'],
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'user_log': {
+            'handlers': ['debug_log'],
             'level': 'DEBUG',
         },
         'django.server': {
