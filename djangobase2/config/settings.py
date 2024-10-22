@@ -340,7 +340,7 @@ LOGGING = {
         'debug_log':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'storages.backends.s3boto3.S3Boto3Storage',
+            'filename': 'http://%s/log/django_log.log' % AWS_S3_CUSTOM_DOMAIN,
             'formatter':'standard'
         }
     },
