@@ -334,12 +334,20 @@ DEFAULT_LOGGING = {
             'level': 'INFO',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
+            'formatter':'standard'
         },
+        'debug_log':{
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'filename': BASE_DIR / "logs/django_log.log",
+            'formatter':'standard'
+        }
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
+            'handlers': ['console','debug_log'],
+            'level': 'DEBUG',
         },
         'django.server': {
             'handlers': ['django.server'],
