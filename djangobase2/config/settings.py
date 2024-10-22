@@ -308,7 +308,7 @@ STATIC_URL = "http://%s/static/" % AWS_S3_CUSTOM_DOMAIN
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-DEFAULT_LOGGING = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
@@ -339,8 +339,8 @@ DEFAULT_LOGGING = {
         },
         'debug_log':{
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / f'logs/django_log.log',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/django_log.log',
             'formatter':'standard'
         }
     },
