@@ -308,6 +308,16 @@ STATIC_URL = "http://%s/static/" % AWS_S3_CUSTOM_DOMAIN
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
+import subprocess
+
+ROOT_DIR = os.path.dirname(BASE_DIR)
+LOG_DIR = '/var/log/django'
+if not os.path.exists(LOG_DIR):
+    LOG_DIR = os.path.join(ROOT_DIR, '.log')
+    os.makedirs(LOG_DIR, exist_ok=True)
+
+subprocess.call(['chmod', '755', LOG_DIR])
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -340,7 +350,7 @@ LOGGING = {
         'debug_log':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'http://%s/django_log.log' % AWS_S3_CUSTOM_DOMAIN,
+            'filename': os.path.join(LOG_DIR,'error.log'),
             'formatter':'standard'
         }
     },
