@@ -350,7 +350,6 @@ LOGGING = {
         'debug_log':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR,'error.log'),
             'formatter':'standard'
         }
     },
