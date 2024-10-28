@@ -323,11 +323,6 @@ LOGGING = {
         }
     },
     'formatters': {
-        'django.server': {
-            '()': 'django.utils.log.ServerFormatter',
-            'format': '[{server_time}] {message}',
-            'style': '{',
-        },
         'standard': {
             '()': 'django.utils.log.ServerFormatter',
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
@@ -355,11 +350,6 @@ LOGGING = {
         'user_log': {
             'handlers': ['debug_log'],
             'level': 'DEBUG',
-        },
-        'django.server': {
-            'handlers': ['django.server'],
-            'level': 'INFO',
-            'propagate': False,
         },
     }
 }
