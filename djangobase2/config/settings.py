@@ -281,7 +281,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     
 
 # else:   
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "config.storages.MediaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "config.storages.StaticStorage",
+	}
+}
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -298,25 +309,15 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DATABASE_NAME"),
         "USER": 'mechauk',
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"), # 데이터베이스 생성 시 작성한 패스워드
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
         "HOST": os.getenv("DATABASE_HOST"),
         "PORT": "5432",
     }
 }
+
+
 MEDIA_URL = "http://%s/media/" % AWS_S3_CUSTOM_DOMAIN
 STATIC_URL = "http://%s/static/" % AWS_S3_CUSTOM_DOMAIN
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
-import subprocess
-
-ROOT_DIR = os.path.dirname(BASE_DIR)
-LOG_DIR = '/var/log/django'
-if not os.path.exists(LOG_DIR):
-    LOG_DIR = os.path.join(ROOT_DIR, '.log')
-    os.makedirs(LOG_DIR, exist_ok=True)
-
-subprocess.call(['chmod', '755', LOG_DIR])
 
 # LOGGING = {
 #     'version': 1,
