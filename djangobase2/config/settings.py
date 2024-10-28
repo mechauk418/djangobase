@@ -263,8 +263,6 @@ if os.getenv("DEBUG") == 'True':
 else:
     DEBUG = False
 
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'media'
 # DEBUG = True
 
 # MEDIA_URL = '/media/'
@@ -278,12 +276,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #         }
 #     }
-    
-
-# else:   
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 
 STORAGES = {
     "default": {
@@ -319,54 +311,55 @@ DATABASES = {
 MEDIA_URL = "http://%s/media/" % AWS_S3_CUSTOM_DOMAIN
 STATIC_URL = "http://%s/static/" % AWS_S3_CUSTOM_DOMAIN
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_false': { # debug = false 판단
-#             '()': 'django.utils.log.RequireDebugFalse',
-#         },
-#         'require_debug_true': { # debug = true 판단
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         }
-#     },
-#     'formatters': {
-#         'django.server': {
-#             '()': 'django.utils.log.ServerFormatter',
-#             'format': '[{server_time}] {message}',
-#             'style': '{',
-#         },
-#         'standard': {
-#             '()': 'django.utils.log.ServerFormatter',
-#             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'INFO',
-#             'filters': ['require_debug_true'],
-#             'class': 'logging.StreamHandler',
-#             'formatter':'standard'
-#         },
-#         'debug_log':{
-#             'level': 'DEBUG',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'formatter':'standard'
-#         }
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#         },
-#         'user_log': {
-#             'handlers': ['debug_log'],
-#             'level': 'DEBUG',
-#         },
-#         'django.server': {
-#             'handlers': ['django.server'],
-#             'level': 'INFO',
-#             'propagate': False,
-#         },
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': { # debug = false 판단
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': { # debug = true 판단
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
+        },
+        'standard': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter':'standard'
+        },
+        'debug_log':{
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename':'./debug.log',
+            'formatter':'standard'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'user_log': {
+            'handlers': ['debug_log'],
+            'level': 'DEBUG',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}

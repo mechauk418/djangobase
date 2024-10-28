@@ -14,7 +14,7 @@ from collections import OrderedDict
 from rest_framework.pagination import PageNumberPagination
 import logging
 
-# logger = logging.getLogger('user_log')
+logger = logging.getLogger('user_log')
 
 class PostPageNumberPagination(PageNumberPagination):
     page_size = 20 # 한 페이지 당 항목 개수
@@ -53,7 +53,7 @@ class ArticleViewSet(ModelViewSet):
         serializer.save(
             create_user = self.request.user
         )
-        # logging.debug('article write')
+        logging.debug('article write')
 
     def retrieve(self, request,pk=None, *args, **kwargs):
 
