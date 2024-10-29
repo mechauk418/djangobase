@@ -311,6 +311,8 @@ DATABASES = {
 MEDIA_URL = "http://%s/media/" % AWS_S3_CUSTOM_DOMAIN
 STATIC_URL = "http://%s/static/" % AWS_S3_CUSTOM_DOMAIN
 
+LOG_DIR = "config.storages.StaticStorage"
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -338,7 +340,7 @@ LOGGING = {
         'debug_log':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename':'./debug.log',
+            'filename': LOG_DIR / 'debug.log',
             'formatter':'standard'
         }
     },
