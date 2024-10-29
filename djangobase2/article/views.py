@@ -211,7 +211,6 @@ def envview(request):
         "폴더2": os.listdir('../'),
         "IP":get_client_ip(request),
         "test":"test",
-        "os":str(os.getcwd())
     }
 
     return JsonResponse(testdict)
