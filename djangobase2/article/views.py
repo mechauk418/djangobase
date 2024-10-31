@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from urllib3 import HTTPResponse
+
+from djangobase2.config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 from .models import Article, Comment, LikeArticle, LikeComment
 from .serializers import ArticleSerializer, CommentSerializer, LikeCommentSerializer, LikeArticleSerializer
 # Create your views here.
@@ -189,7 +191,8 @@ class MyCommentViewSet(ModelViewSet):
         
         return Article.objects.filter(id__in=articlelist).order_by('-pk')
     
-import os
+import os, boto3
+from django.conf import settings
 
 def envview(request):
     logging.debug('article write')
