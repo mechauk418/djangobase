@@ -340,7 +340,7 @@ LOGGING = {
         'debug_log':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'debug.log',
+            'filename': BASE_DIR / 'logs/debug.log',
             'formatter':'standard'
         }
     },
