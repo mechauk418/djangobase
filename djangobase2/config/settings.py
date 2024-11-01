@@ -179,7 +179,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://isdfans.site',
     'https://api.isdfans.site',
     'https://www.isdfans.site',
-    '*',
 ]
 
 SITE_ID = 2
@@ -268,14 +267,26 @@ else:
 # MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# if DEBUG: 
+if DEBUG: 
 
-#     DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DATABASE_NAME"),
+            "USER": 'mechauk',
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+            "HOST": os.getenv("DATABASE_HOST"),
+            "PORT": "5432",
+        }
+    }
 
 STORAGES = {
     "default": {
@@ -296,16 +307,7 @@ AWS_S3_CUSTOM_DOMAIN = "s3.%s.amazonaws.com/%s" % (
     AWS_STORAGE_BUCKET_NAME,
 )
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": 'mechauk',
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST"),
-        "PORT": "5432",
-    }
-}
+
 
 
 MEDIA_URL = "http://%s/media/" % AWS_S3_CUSTOM_DOMAIN
