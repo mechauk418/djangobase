@@ -340,17 +340,23 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_false'],
             'class': 'config.handlers.S3RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, "debug-django.log"),
+            'filename': os.path.join(BASE_DIR, "django.log"),
             'formatter':'standard',
             "maxBytes": 1024 * 1024 * 1,  # 1 MB
             "backupCount": 5,
             "encoding": None,
             "delay": 0,
-        }
+        },
+        's3': {
+            'level': 'INFO',
+            'class': 'config.handlers.S3LoggingHandler',
+            'bucket_name': 'mechauk-bucket',
+            'log_file_prefix': 'logs/my_app_log',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console','user_log'],
+            'handlers': ['console','user_log','s3'],
             'level': 'DEBUG',
         },
     }
