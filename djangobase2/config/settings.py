@@ -347,10 +347,16 @@ LOGGING = {
             "encoding": None,
             "delay": 0,
         },
+        's3': {
+            'level': 'DEBUG',
+            'class': 'config.handlers.S3LoggingHandler',
+            'bucket_name': 'mechauk-bucket',
+            'log_file_prefix': 'logs/my_app_log',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console','user_log'],
+            'handlers': ['console','user_log','s3'],
             'level': 'DEBUG',
         },
     }
