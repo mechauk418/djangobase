@@ -352,7 +352,6 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'config.handlers.S3LoggingHandler',
             'bucket_name': 'mechauk-bucket',
-            'filename': os.path.join(BASE_DIR, "django-s3.log"),
             'log_file_prefix': 'logs/my_app_log',
             'formatter':'standard',
         },
