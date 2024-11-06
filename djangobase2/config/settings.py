@@ -339,17 +339,17 @@ LOGGING = {
         'user_log':{
             'level': 'DEBUG',
             'class': 'config.handlers.S3RotatingFileHandler',
-            'filename': BASE_DIR / 'debug.log',
-            'formatter':'standard'
+            'filename': os.path.join(BASE_DIR, "debug-django.log"),
+            'formatter':'standard',
+            "maxBytes": 1024 * 1024 * 1,  # 1 MB
+            "backupCount": 5,
+            "encoding": None,
+            "delay": 0,
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-        'user_log': {
-            'handlers': ['user_log'],
+            'handlers': ['console','user_log'],
             'level': 'DEBUG',
         },
     }
