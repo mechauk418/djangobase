@@ -14,7 +14,7 @@ from collections import OrderedDict
 from rest_framework.pagination import PageNumberPagination
 import logging
 
-logger = logging.getLogger('user_log')
+logger = logging.getLogger('django')
 
 class PostPageNumberPagination(PageNumberPagination):
     page_size = 20 # 한 페이지 당 항목 개수

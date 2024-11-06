@@ -338,6 +338,7 @@ LOGGING = {
         },
         'user_log':{
             'level': 'DEBUG',
+            'filters': ['require_debug_false'],
             'class': 'config.handlers.S3RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, "debug-django.log"),
             'formatter':'standard',
