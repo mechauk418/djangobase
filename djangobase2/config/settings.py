@@ -179,7 +179,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://isdfans.site',
     'https://api.isdfans.site',
     'https://www.isdfans.site',
-    '*',
 ]
 
 SITE_ID = 2
@@ -337,9 +336,9 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter':'standard'
         },
-        'debug_log':{
+        'user_log':{
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'config.handlers.S3RotatingFileHandler',
             'filename': BASE_DIR / 'debug.log',
             'formatter':'standard'
         }
@@ -350,7 +349,7 @@ LOGGING = {
             'level': 'DEBUG',
         },
         'user_log': {
-            'handlers': ['debug_log'],
+            'handlers': ['user_log'],
             'level': 'DEBUG',
         },
     }
