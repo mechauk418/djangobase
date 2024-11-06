@@ -19,7 +19,6 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx:/etc/nginx/conf.d
+      - /etc/nginx/conf.d:/etc/nginx/conf.d
 
     command: [nginx-debug, '-g', 'daemon off;']
