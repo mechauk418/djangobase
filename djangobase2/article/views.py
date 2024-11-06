@@ -40,7 +40,7 @@ class CustomSearchFilter(filters.SearchFilter):
         return super().get_search_fields(view, request)
 
 class ArticleViewSet(ModelViewSet):
-
+    logger.debug('article')
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Article.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
@@ -50,10 +50,11 @@ class ArticleViewSet(ModelViewSet):
     pagination_class=PostPageNumberPagination
 
     def perform_create(self, serializer):
+        logger.debug('article write')
         serializer.save(
             create_user = self.request.user
         )
-        logging.debug('article write')
+        
 
     def retrieve(self, request,pk=None, *args, **kwargs):
 
