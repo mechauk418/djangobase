@@ -356,7 +356,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console','user_log','s3'],
+            'handlers': ['console','user_log'],
             'level': 'DEBUG',
         },
     }

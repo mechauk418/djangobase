@@ -18,5 +18,7 @@ services:
       - "80:80"
     depends_on:
       - backend
+    volumes:
+      - etc/nginx/conf.d:/etc/nginx/conf.d
 
     command: [nginx-debug, '-g', 'daemon off;']
