@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - /home/ubuntu/nginx:./logs
+      - "/home/ubuntu/nginx:/app/logs"
 
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
   
