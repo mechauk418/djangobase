@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./nginx/:/app/article/
+      - ./nginx:./article
 
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
   
@@ -20,7 +20,5 @@ services:
       - "80:80"
     depends_on:
       - backend
-    volumes:
-      - /etc/nginx/conf.d:/etc/nginx/conf.d
 
     command: [nginx-debug, '-g', 'daemon off;']
