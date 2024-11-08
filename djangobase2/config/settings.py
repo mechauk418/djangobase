@@ -347,16 +347,19 @@ LOGGING = {
             "encoding": None,
             "delay": 0,
         },
-        's3': {
+        'base_log': {
             'level': 'DEBUG',
-            'class': 'config.handlers.S3LoggingHandler',
-            'bucket_name': 'mechauk-bucket',
-            'log_file_prefix': 'logs',
+            'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/mysite.log',
+            'formatter':'standard',
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console','user_log'],
+            'handlers': ['console','user_log','base_log'],
             'level': 'DEBUG',
         },
     }
