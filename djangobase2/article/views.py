@@ -13,6 +13,7 @@ from .permissions import IsOwnerOrReadOnly
 from collections import OrderedDict
 from rest_framework.pagination import PageNumberPagination
 import logging
+from rest_framework.decorators import action
 
 logger = logging.getLogger('django')
 
@@ -224,3 +225,21 @@ def metadate(request):
     for k in sorted(values):
         html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, values[k]))
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
+class ActionViewSet(ModelViewSet):
+
+    queryset = Article.objects.all().order_by('-pk')
+    serializer_class = ArticleSerializer
+    filter_backends = [asfilters.DjangoFilterBackend, CustomSearchFilter]
+    filterset_fields = ('title', 'create_user__username', 'content', 'subject')
+    search_fields = ('title', 'create_user__username', 'content')
+    pagination_class=PostPageNumberPagination
+
+    @action(detail=False, methods=['GET'])
+    def actiontestdef(self,request):
+        testdict = {
+            "test":"test222",
+        }
+
+        return JsonResponse(testdict)

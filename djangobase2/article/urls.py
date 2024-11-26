@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     ArticleViewSet, CommentViewSet, MyArticleViewSet, 
     LikeArticleViewSet, LikeCommentViewSet, BestArticleViewSet,
-    MyCommentViewSet,envview,metadate
+    MyCommentViewSet,envview,metadate, ActionViewSet
     )
 
 app_name="article"
@@ -19,5 +19,6 @@ urlpatterns = [
     path("myarticle/", MyArticleViewSet.as_view({"get": "list"}), name="myarticle"),
     path("mycomment/", MyCommentViewSet.as_view({"get": "list"}), name="mycomment"),
     path("getenv",envview),
-    path("metadate",metadate)
+    path("metadate",metadate),
+    path("actiontest/", ActionViewSet.as_view({"get": "actiontestdef", "post":'create',}), name="actiontest"),
 ]
