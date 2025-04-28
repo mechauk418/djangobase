@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #
     "django_filters",
     "storages",
+    "debug_toolbar",
     # auth
     "rest_framework",
     "rest_framework.authtoken",
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = "config.urls"
